@@ -1,4 +1,4 @@
-# Practice 2024 Project (monorepo)
+# Diploma 2025 Project (monorepo)
 
 This repository is the **single entry‑point** for the Diploma 2025 deliverable.  
 It glues together two sub‑projects—
@@ -16,8 +16,8 @@ A ready‑to‑run **`docker‑compose.yml`** spins up both services so you can 
 
 ```
 .
-├── backend/               # Practice_2024_backend  (Flask)
-├── frontend/              # Practice_2024_frontend (React)
+├── backend/               # Diploma_2025_backend  (Flask)
+├── frontend/              # Diploma_2025_frontend (React)
 ├── docker-compose.yml     # Multi‑service orchestration
 └── README.md              # (this file)
 ```
@@ -31,8 +31,8 @@ A ready‑to‑run **`docker‑compose.yml`** spins up both services so you can 
 1. **Clone the monorepo**
 
    ```bash
-   git clone https://github.com/<you>/Practice_2024_monorepo.git
-   cd Practice_2024_monorepo
+   git clone https://github.com/<you>/Diploma_2025_monorepo.git
+   cd Diploma_2025_monorepo
    ```
 
 2. **Set your Roboflow API key**
