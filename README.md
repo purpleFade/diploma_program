@@ -86,23 +86,34 @@ Update `VITE_APP_API_BASE` in `frontend/.env` to `http://127.0.0.1:5000`.
 ## 📄 docker‑compose.yaml (excerpt)
 
 ```yaml
-version: "3.9"
+version: '3.8'
 
 services:
   backend:
-    build: ./backend
-    env_file: .env.backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     ports:
       - "5000:5000"
+    volumes:
+      - ./results:/app/results
+    environment:
+      # Передаємо Roboflow API ключ як змінну середовища в контейнер
+      # ${ROBOFLOW_API_KEY} читає значення з вашого середовища, де запускається docker-compose
+      ROBOFLOW_API_KEY: ${ROBOFLOW_API_KEY}
+
 
   frontend:
-    build: ./frontend
-    environment:
-      - VITE_APP_API_BASE=http://backend:5000
+    build:
+      context: ./frontend # Вказує, де шукати Dockerfile.frontend та контекст збірки
+      dockerfile: Dockerfile
+      args:
+        REACT_APP_API_BASE: http://backend:5000
     ports:
-      - "3000:3000"
+      - "80:80" # Мапуємо порт 80 контейнера (Nginx) на порт 80 хост-машини
     depends_on:
-      - backend
+      - backend # Фронтенд залежить від бекенду (не почнеться, поки бекенд не буде запущено)
+
 ```
 
 > The actual file may include caching layers or production optimisations.  
