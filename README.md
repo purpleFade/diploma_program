@@ -99,7 +99,6 @@ services:
       - ./results:/app/results
     environment:
       # Передаємо Roboflow API ключ як змінну середовища в контейнер
-      # ${ROBOFLOW_API_KEY} читає значення з вашого середовища, де запускається docker-compose
       ROBOFLOW_API_KEY: ${ROBOFLOW_API_KEY}
 
 
