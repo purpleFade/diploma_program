@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend # Вказує, де шукати Dockerfile.backend та контекст збірки
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000" # Мапуємо порт 5000 контейнера на порт 5000 хост-машини
+    volumes:
+      # Прив'язуємо локальну директорію 'results' до директорії '/app/results' всередині контейнера.
+      # Це дозволяє зберігати результати на хост-машині та мати доступ до них.
+      - ./results:/app/results
+    environment:
+      # Передаємо Roboflow API ключ як змінну середовища в контейнер
+      # ${ROBOFLOW_API_KEY} читає значення з вашого середовища, де запускається docker-compose
+      ROBOFLOW_API_KEY: ${ROBOFLOW_API_KEY}
+    #networks:
+    #  - app-network # Явно вказуємо мережу (не обов'язково, compose створить дефолтну)
+
+  frontend:
+    build:
+      context: ./frontend # Вказує, де шукати Dockerfile.frontend та контекст збірки
+      dockerfile: Dockerfile
+      args:
+        # Передаємо URL бекенду як аргумент збірки для фронтенду
+        # 'backend' - це ім'я сервісу бекенду в мережі Docker Compose
+        REACT_APP_API_BASE: http://backend:5000
+    ports:
+      - "80:80" # Мапуємо порт 80 контейнера (Nginx) на порт 80 хост-машини
+    depends_on:
+      - backend # Фронтенд залежить від бекенду (не почнеться, поки бекенд не буде запущено)
+    #networks:
+    #  - app-network # Явно вказуємо мережу (не обов'язково)
+
+# Визначення мережі (не обов'язково, якщо використовується дефолтна)
+#networks:
+#  app-network:
+#    driver: bridge
+
+# Визначення тому (не обов'язково, якщо використовується bind mount ./results)
+# Якщо ви хочете керований Docker том, розкоментуйте це і змініть volumes в backend на 'results_volume:/app/results'
+#volumes:
+#  results_volume:
