@@ -115,9 +115,6 @@ services:
 
 ```
 
-> The actual file may include caching layers or production optimisations.  
-> Feel free to tweak the port mapping if 3000/5000 are occupied.
-
 ---
 
 ## 🙋 FAQ
