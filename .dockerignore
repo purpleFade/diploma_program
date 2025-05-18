@@ -1,0 +1,11 @@
+**/__pycache__
+**/*.pyc
+*.log
+*.tmp
+.git
+.gitignore
+node_modules
+frontend/node_modules
+backend/.venv
+dist
+build
